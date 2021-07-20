@@ -1,0 +1,31 @@
+
+f = open('in')
+l = f.readlines()
+l = l[0:-1]
+l = list(map(str.rstrip,l))
+cnt = 0
+idx=0
+while   1:
+    ff = open('p{}.in'.format(cnt+1),'w')
+    cnt+=1
+    for i in range(0,5):
+        if l[idx].__len__() < 5:
+            print(idx,l[idx])
+            l[idx] = l[idx]+' '
+        ff.write(l[idx]+'\n')
+        idx+=1
+    command = []
+    while 1:
+        # print(idx,l[idx])
+        # print(l[idx][-1])
+
+        command.append(l[idx].strip().replace('A','U').replace('B','D').replace('0',''))
+        idx+=1
+        if l[idx-1][-1] == '0':
+            break
+    ff.write("".join(command)+'\n')
+    ff.close()
+    if idx == l.__len__():
+        break
+
+f.close()
