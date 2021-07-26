@@ -11,7 +11,8 @@ var getDataList= require("./getDataList")
 function Diff(file1,file2){
   //TODO check file1 2 exists?
   try {
-    child_process.execSync(`diff ${file1} ${file2}`)
+    //console.log( `diff --strip-trailing-cr ${file1} ${file2}` )
+    child_process.execSync(`diff --strip-trailing-cr ${file1} ${file2}`)
     return 1
   }
   catch(error){
@@ -43,7 +44,7 @@ function compare( exePath,dataDir ,time=1){
       let file1 = path.join(dataDir,out_file)
       let file2 = 'out'
 
-      if( run(exePath, time , __in, file2) == 0){
+      if( run(time,exePath, __in, file2) == 0){
           console.log( `${i}: timeout` )
           continue
       }
@@ -56,4 +57,4 @@ function compare( exePath,dataDir ,time=1){
   }
 }
 
-console.log( process.argv.slice(2) )
+compare( ...process.argv.slice(2) )

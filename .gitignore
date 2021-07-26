@@ -1,1 +1,7 @@
-*.out
+problem-for-BJ/
+node_modules
+*problems.pdf
+*problem.pdf
+__contest*
+code/
+tmp/

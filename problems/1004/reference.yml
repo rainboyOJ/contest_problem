@@ -1,0 +1,5 @@
+title: 流量
+time: 1000
+memory: 128
+input: tarifa.in
+output: tarifa.out
