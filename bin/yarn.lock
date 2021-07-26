@@ -61,6 +61,11 @@ js-yaml@^4.1.0:
   dependencies:
     argparse "^2.0.1"
 
+markdown-table@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.nlark.com/markdown-table/download/markdown-table-3.0.1.tgz#88c48957aaf2a8014ccb2ba026776a1d736fe3dc"
+  integrity sha1-iMSJV6ryqAFMyyugJndqHXNv49w=
+
 "minimatch@2 || 3":
   version "3.0.4"
   resolved "https://registry.nlark.com/minimatch/download/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
