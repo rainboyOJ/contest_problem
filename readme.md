@@ -43,3 +43,8 @@ node ../../bin/contestTOpdf.js
 ../../bin/pandoc.sh
 ```
 
+## 学生如果打包代码
+
+```
+zip 名字缩写 {1...4}.zip
+```

@@ -7,6 +7,11 @@ argparse@^2.0.1:
   resolved "https://registry.npm.taobao.org/argparse/download/argparse-2.0.1.tgz?cache=0&sync_timestamp=1598649397806&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fargparse%2Fdownload%2Fargparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
   integrity sha1-JG9Q88p4oyQPbJl+ipvR6sSeSzg=
 
+ascii-table@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.npm.taobao.org/ascii-table/download/ascii-table-0.0.9.tgz#06a6604d6a55d4bf41a9a47d9872d7a78da31e73"
+  integrity sha1-BqZgTWpV1L9BqaR9mHLXp42jHnM=
+
 balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.nlark.com/balanced-match/download/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
@@ -60,11 +65,6 @@ js-yaml@^4.1.0:
   integrity sha1-wftl+PUBeQHN0slRhkuhhFihBgI=
   dependencies:
     argparse "^2.0.1"
-
-markdown-table@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.nlark.com/markdown-table/download/markdown-table-3.0.1.tgz#88c48957aaf2a8014ccb2ba026776a1d736fe3dc"
-  integrity sha1-iMSJV6ryqAFMyyugJndqHXNv49w=
 
 "minimatch@2 || 3":
   version "3.0.4"

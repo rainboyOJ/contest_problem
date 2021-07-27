@@ -34,9 +34,11 @@ function run(time,exe,in_file,out){
 /* 
  * 1. 执行文件
  * 2. 数据目录
+ * 3. time
  * */
 function compare( exePath,dataDir ,time=1){
   var { in_list,out_list,both_list,count } = getDataList(dataDir)
+  let results = []
 
   for(let i =0 ; i < count ;i++){
       let [in_file,out_file] = both_list[i]
@@ -45,16 +47,21 @@ function compare( exePath,dataDir ,time=1){
       let file2 = 'out'
 
       if( run(time,exePath, __in, file2) == 0){
-          console.log( `${i}: timeout` )
+          //console.log( `${i}: timeout` )
+          results.push( 'TLE')
           continue
       }
 
       if( Diff(file1,file2) == 0){
-          console.log( `${i}: wrong answer` )
+          //console.log( `${i}: wrong answer` )
+          results.push('WA')
           continue
       }
-      console.log( `${i}: right` )
+      //console.log( `${i}: right` )
+      results.push('AC')
   }
+  return results
 }
 
-compare( ...process.argv.slice(2) )
+//compare( ...process.argv.slice(2) )
+module.exports = compare

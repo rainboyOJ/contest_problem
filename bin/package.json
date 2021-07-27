@@ -1,9 +1,8 @@
 {
-  "type": "module",
   "dependencies": {
+    "ascii-table": "^0.0.9",
     "formidable": "^1.2.2",
     "js-yaml": "^4.1.0",
-    "markdown-table": "^3.0.1",
     "mv": "^2.1.1"
   }
 }

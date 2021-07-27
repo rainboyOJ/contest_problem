@@ -1,13 +1,9 @@
 // 把某个比赛下的多个题目加载起来
 // 转成一个md里，然后转成一个pdf
 
-import {readFileSync, writeFileSync}  from "fs"
-//const jsyaml = require("js-yaml")
-import * as jsyaml from 'js-yaml'
-//const Path = require("path")
-import * as Path from "path"
-//const {markdownTable} = require('markdown-table')
-import {markdownTable} from 'markdown-table'
+const {readFileSync, writeFileSync}  = require("fs")
+const jsyaml = require("js-yaml")
+const Path = require("path")
 
 function load_yaml(path){
   return jsyaml.load(readFileSync(path,{encoding:'utf8'}))
@@ -16,7 +12,7 @@ function load_yaml(path){
 
 let plist = load_yaml("./plist.yml")
 
-const __dirname = Path.resolve(Path.dirname(decodeURI(new URL(import.meta.url).pathname)));
+//const __dirname = Path.resolve(Path.dirname(decodeURI(new URL(import.meta.url).pathname)));
 
 function load_problem(pid){
   let base_path = Path.join(__dirname,"../problems")
@@ -64,9 +60,18 @@ listings-disable-line-numbers: true
 listings-no-page-break: true
 ...
 
-
 `)
-Write(    markdownTable(table_info,{align:'c',padding:true}) )
+
+
+function markdownTable(array2D){
+  let ret = []
+  array2D.splice(1,0,new Array(10).fill(':----:'))
+  for(let row of array2D ) ret.push( '| ' +  row.join(' | ') + ' |' )
+  return ret.join('\n')
+}
+
+
+Write(    markdownTable(table_info) )
 for( const [i, info] of problems.entries() ){
   Write('\n\n\n\n')
   Write(`## ${i+1} ${info.refrence.title} \n\n`)
