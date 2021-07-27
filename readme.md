@@ -11,7 +11,6 @@
 ```
 
 ## 如何使用
-
 ### 需要软件
 
  - nodejs >= 14
@@ -47,4 +46,18 @@ node ../../bin/contestTOpdf.js
 
 ```
 zip 名字缩写 {1...4}.zip
+```
+
+### 手动评测
+
+安装 https://github.com/rainboyOJ/testlib 下的 fcmp2
+
+```
+git clone https://github.com/rainboyOJ/testlib
+cd testlib
+mkdir build
+cmake ..
+make
+cd ../output
+sudo install fcmp2 /usr/bin
 ```
