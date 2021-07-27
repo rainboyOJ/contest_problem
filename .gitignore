@@ -5,3 +5,4 @@ node_modules
 __contest*
 code/
 tmp/
+out
