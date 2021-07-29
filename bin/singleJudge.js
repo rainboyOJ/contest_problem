@@ -37,16 +37,17 @@ singleJudge 6 1
 }
 
 function doJudge(exePath,CID_PID,PID){
-  let table = new asciiTable(`JudgeResult ${CID_PID}`)
-  table.setHeading('ID','RESULT')
+  let table = new asciiTable(`JudgeResult ${CID_PID} ${PID}`)
+  //table.setHeading('ID','RESULT')
   let rets = compare(exePath,join(__dirname,'../problems/',PID+'','data'))
-  console.log( rets )
+  //console.log( rets )
   cnt = 0
-  rets.map( ret => table.addRow(++cnt,ret))
-
+  //rets.map( ret => table.addRow(++cnt,ret))
+  table.setHeading( ...( new Array(rets.length).fill(0).map( (val,idx) => idx+1+'' )) )
+  table.addRow(...rets)
   table.setJustify()//(AsciiTable.CENTER,'',8)
-  table.setAlign(0, AsciiTable.CENTER)
-  table.setAlign(1, AsciiTable.CENTER)
+  //table.setAlign(0, AsciiTable.CENTER)
+  //table.setAlign(1, AsciiTable.CENTER)
 
   console.log( table.toString() )
   console.log( 'TOTAL SCORE: ', (100 / rets.length * rets.filter(name => name =='AC').length).toFixed(2) )

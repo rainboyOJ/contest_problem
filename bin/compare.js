@@ -8,11 +8,11 @@ const child_process = require("child_process")
 
 var getDataList= require("./getDataList")
 
-function Diff(file1,file2){
+function Diff(__in,file1,file2){
   //TODO check file1 2 exists?
   try {
     //console.log( `diff --strip-trailing-cr ${file1} ${file2}` )
-    child_process.execSync(`diff --strip-trailing-cr ${file1} ${file2}`)
+    child_process.execSync(`/usr/bin/fcmp2 ${__in} ${file1} ${file2}`)
     return 1
   }
   catch(error){
@@ -52,7 +52,7 @@ function compare( exePath,dataDir ,time=1){
           continue
       }
 
-      if( Diff(file1,file2) == 0){
+      if( Diff(__in,file1,file2) == 0){
           //console.log( `${i}: wrong answer` )
           results.push('WA')
           continue
