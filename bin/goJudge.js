@@ -6,8 +6,9 @@ console.log(
 if( process.argv.length != 4) process.exit()
 
 const {join, dirname, basename, extname} = require("path")
-const {readdir, readdirSync, existsSync} = require("fs")
+const {readFileSync, readdirSync, existsSync} = require("fs")
 const {execSync} = require("child_process")
+const jsyaml = require("js-yaml")
 
 const CID = process.argv[2]
 const ZIP = process.argv[3]
@@ -37,10 +38,12 @@ readdirSync(ZIPCWD).filter(name => extname(name) == '.cpp' )
 execSync(`unzip -o ${basename(ZIP)}`,{cwd:ZIPCWD})
 //compile
 const EXE_FILE = new Array(100)
-readdirSync(ZIPCWD).filter(name => extname(name) == '.cpp' )
-    .forEach( name => {
-      console.log( `编译代码 ： ${name}` )
 
-      execSync(`g++ -o ${basename(name,'.cpp')} ${name}`,{cwd:ZIPCWD}) 
-    })
 
+let {problems}= jsyaml.load(readFileSync(join(__dirname,'../ContestAll/contest_'+CID,'plist.yml'),{encoding:'utf8'}) )
+
+const singleJudge = require("./singleJudge")
+
+for( let i =0;i<problems.length;i++){
+  singleJudge( join(process.cwd(),'tmp',),i+1+'',problems[i]+'')
+}

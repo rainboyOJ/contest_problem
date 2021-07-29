@@ -29,30 +29,31 @@ singleJudge 6 1
   let {problems}= jsyaml.load( fs.readFileSync(join(__dirname,'../ContestAll/contest_'+CID,'plist.yml'),{encoding:'utf8'}) )
   let PID = problems[parseInt(CID_PID)-1]
 
-  execSync(`g++ -o ${CID_PID} ${CID_PID}.cpp`,{cwd:join(__dirname,'../tmp')})
-  console.log( `g++ -o ${CID_PID} ${CID_PID}.cpp` )
 
-  doJudge(join(__dirname,'../tmp/'+CID_PID), CID_PID,PID)
+  doJudge(join(process.cwd(),'tmp'), CID_PID,PID)
 
 }
 
-function doJudge(exePath,CID_PID,PID){
+function doJudge(exeCWD,CID_PID,PID){
+  try {
+    execSync(`g++ -o ${CID_PID} ${CID_PID}.cpp`,{cwd:exeCWD,stdio:[0,1,"ignore"]})
+  }
+  catch {
+    let table = new asciiTable(`JudgeResult ${CID_PID} ${PID}`)
+    table.addRow(`编译失败 得分0！`)
+    table.setJustify()//(AsciiTable.CENTER,'',8)
+    console.log( table.toString() )
+    return
+  }
   let table = new asciiTable(`JudgeResult ${CID_PID} ${PID}`)
-  //table.setHeading('ID','RESULT')
-  let rets = compare(exePath,join(__dirname,'../problems/',PID+'','data'))
-  //console.log( rets )
-  cnt = 0
-  //rets.map( ret => table.addRow(++cnt,ret))
+  let rets = compare(join(exeCWD,CID_PID+'') ,join(__dirname,'../problems/',PID+'','data'))
   table.setHeading( ...( new Array(rets.length).fill(0).map( (val,idx) => idx+1+'' )) )
   table.addRow(...rets)
   table.setJustify()//(AsciiTable.CENTER,'',8)
-  //table.setAlign(0, AsciiTable.CENTER)
-  //table.setAlign(1, AsciiTable.CENTER)
-
   console.log( table.toString() )
   console.log( 'TOTAL SCORE: ', (100 / rets.length * rets.filter(name => name =='AC').length).toFixed(2) )
   console.log( '\n\n' )
 }
 
 
-//module.exports = 
+module.exports =  doJudge
