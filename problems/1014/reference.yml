@@ -1,0 +1,6 @@
+title: 背景地图
+time: 1000
+memory: 128
+codename: bgmap
+input: bgmap.in
+outupt: bgmap.out

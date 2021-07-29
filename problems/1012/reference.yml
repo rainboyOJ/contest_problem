@@ -1,0 +1,6 @@
+title: 小型飞船
+time: 1000
+memory: 128
+codename: flyship
+input: flyship.in
+outupt: flyship.out
