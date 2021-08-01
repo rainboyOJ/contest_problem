@@ -6,3 +6,4 @@ __contest*
 code/
 tmp/
 out
+*_result

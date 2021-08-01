@@ -77,8 +77,11 @@ module.exports = (path)=>{
     if( in_list.length == 0 ||  out_list.length == 0 )
         throw(`目录:${path} 下数据为空`)
 
-    if( in_list.length !== out_list.length)
+    if( in_list.length !== out_list.length){
+        console.error( in_list  )
+        console.error( out_list  )
         throw(`目录:${path} 下输入输出数据的数目不相等`)
+    }
 
     let both_list = []
 
