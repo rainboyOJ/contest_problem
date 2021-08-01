@@ -1,0 +1,6 @@
+title: clock
+time: 1000
+memory: 128
+codename: clock
+input: clock.in
+outupt: clock.out

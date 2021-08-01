@@ -1,0 +1,6 @@
+title: decode
+time: 1000
+memory: 128
+codename: decode
+input: decode.in
+outupt: decode.out
