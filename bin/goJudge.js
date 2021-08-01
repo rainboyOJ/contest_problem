@@ -42,7 +42,7 @@ const EXE_FILE = new Array(100)
 
 let {problems}= jsyaml.load(readFileSync(join(__dirname,'../ContestAll/contest_'+CID,'plist.yml'),{encoding:'utf8'}) )
 
-const singleJudge = require("./singleJudge")
+const singleJudge = require("./goJudgeSingle")
 
 for( let i =0;i<problems.length;i++){
   singleJudge( join(process.cwd(),'tmp',),i+1+'',problems[i]+'')

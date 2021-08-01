@@ -2,18 +2,19 @@
 const compare = require("./compare")
 const jsyaml = require("js-yaml")
 const fs = require("fs")
-const {join, basename, dirname} = require("path")
+const {join} = require("path")
 const {execSync} = require("child_process")
 const asciiTable = require('ascii-table')
 const AsciiTable = require("ascii-table/ascii-table")
+const {toASCII} = require("punycode")
 
 if(!module.parent){
   console.log( 
 `
-singleJudge pid cppfile
-singleJudge 1000 tmp/1.cpp
+goJudgeSingle CID test_1
+goJudgeSingle 6 1
   - 编译 tmp/1.cpp -> tmp/1
-  - 找到 problems/1000 里的reference.yml 里对应的第一个题目的编号
+  - 找到 contest_6 里的plist.yml 里对应的第一个题目的编号
   - compare tmp/1 problems/pid/data
 `
   )
@@ -22,34 +23,29 @@ singleJudge 1000 tmp/1.cpp
     console.log( '参数数目不对，退出!' )
     process.exit()
   }
-  let PID = process.argv[2]
-  let CPPFILE = process.argv[3]
+  let CID = process.argv[2]
+  let CID_PID = process.argv[3]
 
-  let problem_info_raw =  fs.readFileSync(join(__dirname,'../problems/',PID,'reference.yml'),{encoding:'utf8'}) 
-  let Probelm_info = jsyaml.load(problem_info_raw)
+  let {problems}= jsyaml.load( fs.readFileSync(join(__dirname,'../ContestAll/contest_'+CID,'plist.yml'),{encoding:'utf8'}) )
+  let PID = problems[parseInt(CID_PID)-1]
 
-  console.log("=========== 题目信息 ===========")
-  console.log( problem_info_raw )
-  console.log("================================")
 
-  doJudge(CPPFILE,PID,Probelm_info.title)
+  doJudge(join(process.cwd(),'tmp'), CID_PID,PID)
 
 }
 
-function doJudge(cppfile,PID,title){
-  let CID_PID = basename(cppfile,'.cpp') // name.cpp --> name
-  let exeCWD =dirname( join(process.cwd(),cppfile) )
+function doJudge(exeCWD,CID_PID,PID){
   try {
     execSync(`g++ -o ${CID_PID} ${CID_PID}.cpp`,{cwd:exeCWD,stdio:[0,1,"ignore"]})
   }
   catch {
-    let table = new asciiTable(`JudgeResult ${PID} ${title}`)
+    let table = new asciiTable(`JudgeResult ${CID_PID} ${PID}`)
     table.addRow(`编译失败 得分0！`)
     table.setJustify()//(AsciiTable.CENTER,'',8)
     console.log( table.toString() )
     return
   }
-  let table = new asciiTable(`JudgeResult ${PID} ${title}`)
+  let table = new asciiTable(`JudgeResult ${CID_PID} ${PID}`)
   let rets = compare(join(exeCWD,CID_PID+'') ,join(__dirname,'../problems/',PID+'','data'))
   table.setHeading( ...( new Array(rets.length).fill(0).map( (val,idx) => idx+1+'' )) )
   table.addRow(...rets)
