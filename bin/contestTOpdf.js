@@ -1,3 +1,4 @@
+#!/bin/env node
 // 把某个比赛下的多个题目加载起来
 // 转成一个md里，然后转成一个pdf
 
@@ -35,7 +36,7 @@ for( let pid of plist.problems){
     info.refrence.title,
     info.refrence.time,
     info.refrence.memory,
-    info.refrence.codename || info.refrence.input.split(".")[0],
+    info.refrence.codename ||( info.refrence.input ?  info.refrence.input.split(".")[0] : false) || 'unkown', 
     info.refrence.input,
     info.refrence.output
   ])
