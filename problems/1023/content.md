@@ -13,19 +13,15 @@
 ### 输入样例
 
 ```plaintext
-carry .in 4 4 3 2 1 
+4
+4 3 2 1
 ```
 
 ### 输出样例
 
 ```plaintext
-carry .out 6 
+6
 ```
-
-
-
- 
-
 ### 来源
 
 【培训教程．模拟题】carry车厢重组
