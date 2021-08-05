@@ -1,3 +1,4 @@
+#!/bin/env node
 // target : 收集学生比赛的代码 手动评测
 // yarn && node uploadfile.js
 // 学生上传打包成zip的代码文件
