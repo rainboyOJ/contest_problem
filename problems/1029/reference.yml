@@ -1,0 +1,6 @@
+title: 水果狂欢
+time: 1000
+memory: 128
+input:  fruit.in
+output: fruit.out
+source: http://www.usaco.org/index.php?page=viewproblem2&cpid=574

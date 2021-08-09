@@ -1,0 +1,6 @@
+title: 面积
+time: 1000
+memory: 128
+input:  area.in
+output: area.out
+source: http://www.usaco.org/index.php?page=viewproblem2&cpid=641
