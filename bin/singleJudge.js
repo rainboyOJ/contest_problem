@@ -2,8 +2,8 @@
 const compare = require("./compare")
 const jsyaml = require("js-yaml")
 const fs = require("fs")
-const {join, basename, dirname} = require("path")
-const {execSync} = require("child_process")
+const {join, basename, dirname, isAbsolute} = require("path")
+const {execSync, exec} = require("child_process")
 const asciiTable = require('ascii-table')
 const AsciiTable = require("ascii-table/ascii-table")
 
@@ -32,13 +32,23 @@ singleJudge 1000 tmp/1.cpp
   console.log( problem_info_raw )
   console.log("================================")
 
-  doJudge(CPPFILE,PID,Probelm_info.title)
+  let {retString,retScore} = doJudge(CPPFILE,PID,Probelm_info.title)
+  console.log( retString )
+  //console.log( retScore )
 
 }
 
 function doJudge(cppfile,PID,title){
+  console.log( cppfile,PID,title )
+  let retString = ''
+  let retScore = 0
+
   let CID_PID = basename(cppfile,'.cpp') // name.cpp --> name
-  let exeCWD =dirname( join(process.cwd(),cppfile) )
+  let exeCWD =''
+  if( isAbsolute(cppfile))
+    exeCWD = dirname(cppfile)
+  else
+    exeCWD = dirname( join(process.cwd(),cppfile) )
   try {
     execSync(`g++ -o ${CID_PID} ${CID_PID}.cpp`,{cwd:exeCWD,stdio:[0,1,"ignore"]})
   }
@@ -46,17 +56,23 @@ function doJudge(cppfile,PID,title){
     let table = new asciiTable(`JudgeResult ${PID} ${title}`)
     table.addRow(`编译失败 得分0！`)
     table.setJustify()//(AsciiTable.CENTER,'',8)
-    console.log( table.toString() )
-    return
+    //console.log( table.toString() )
+    retString += table.toString()
+    return {retString,retScore}
   }
   let table = new asciiTable(`JudgeResult ${PID} ${title}`)
   let rets = compare(join(exeCWD,CID_PID+'') ,join(__dirname,'../problems/',PID+'','data'))
   table.setHeading( ...( new Array(rets.length).fill(0).map( (val,idx) => idx+1+'' )) )
   table.addRow(...rets)
   table.setJustify()//(AsciiTable.CENTER,'',8)
-  console.log( table.toString() )
-  console.log( 'TOTAL SCORE: ', (100 / rets.length * rets.filter(name => name =='AC').length).toFixed(2) )
-  console.log( '\n\n' )
+  //console.log( table.toString() )
+  //console.log( 'TOTAL SCORE: ', (100 / rets.length * rets.filter(name => name =='AC').length).toFixed(2) )
+  //console.log( '\n\n' )
+  retScore  = (100 / rets.length * rets.filter(name => name =='AC').length).toFixed(2) 
+
+  retString += table.toString() +'\n'
+  retString +=  'TOTAL SCORE: ' + retScore +'\n\n'
+  return {retString,retScore}
 }
 
 

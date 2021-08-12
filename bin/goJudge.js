@@ -6,7 +6,7 @@ console.log(
 if( process.argv.length != 4) process.exit()
 
 const {join, dirname, basename, extname} = require("path")
-const {readFileSync, readdirSync, existsSync} = require("fs")
+const {readFileSync, readdirSync, existsSync, writeFileSync, appendFileSync} = require("fs")
 const {execSync} = require("child_process")
 const jsyaml = require("js-yaml")
 
@@ -42,8 +42,19 @@ const EXE_FILE = new Array(100)
 
 let {problems}= jsyaml.load(readFileSync(join(__dirname,'../ContestAll/contest_'+CID,'plist.yml'),{encoding:'utf8'}) )
 
-const singleJudge = require("./goJudgeSingle")
+const singleJudge = require("./singleJudge")
+
+let SCORE =     []
+let RESULT = []
+let user_name = basename(ZIP,".zip")
 
 for( let i =0;i<problems.length;i++){
-  singleJudge( join(process.cwd(),'tmp',),i+1+'',problems[i]+'')
+  let {title}= jsyaml.load(readFileSync(join(__dirname,"../problems",problems[i]+'','reference.yml'),{encoding:"utf8"}))
+  let {retString,retScore} = singleJudge( join(process.cwd(),'tmp',`${i+1}.cpp`),problems[i]+'',title)
+  SCORE.push(retScore)
+  RESULT.push(retString)
+  console.log( retString )
 }
+writeFileSync(`${user_name}_result.txt`, RESULT.join('\n'),{encoding:'utf8'})
+let sum = SCORE.map( d=>parseFloat(d) ).reduce( (total,num) => total + num )
+appendFileSync(`contest_${CID}_result.txt`, `${user_name},${SCORE.join(',')},${sum}\n`)

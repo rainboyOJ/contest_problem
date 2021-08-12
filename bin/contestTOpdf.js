@@ -2,7 +2,7 @@
 // 把某个比赛下的多个题目加载起来
 // 转成一个md里，然后转成一个pdf
 
-const {readFileSync, writeFileSync}  = require("fs")
+const {readFileSync, writeFileSync, existsSync}  = require("fs")
 const jsyaml = require("js-yaml")
 const Path = require("path")
 
@@ -70,9 +70,15 @@ function markdownTable(array2D){
   for(let row of array2D ) ret.push( '| ' +  row.join(' | ') + ' |' )
   return ret.join('\n')
 }
-
-
 Write(    markdownTable(table_info) )
+
+if( existsSync('info.md') ){
+  console.log( `存在 info.md,写入` )
+  Write( readFileSync('info.md',{encoding:'utf8'}))
+}
+
+
+
 for( const [i, info] of problems.entries() ){
   Write('\n\n\n\n')
   Write(`## ${i+1} ${info.refrence.title} \n\n`)
