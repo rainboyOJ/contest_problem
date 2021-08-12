@@ -215,7 +215,7 @@ getline(cin,s)
 ### 〔数据范围〕
 
  - 对于$50\%$的数据，$0 \leqslant n \leqslant 10$
- - 对于$100\%$的数据，$0 \leqslant n \leqslant 100$,每个角色的过桥时间$n \leqslant 100$
+ - 对于$100\%$的数据，$0 \leqslant n \leqslant 100000$,每个角色的过桥时间$n \leqslant 100$
 
 
 ### 〔提示！！〕
