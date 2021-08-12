@@ -1,0 +1,5 @@
+title: 火车车厢
+time: 1000
+memory: 128
+input:  train.in
+output: train.out

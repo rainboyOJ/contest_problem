@@ -1,0 +1,5 @@
+title: 击鼓传花 
+time: 1000
+memory: 128
+input:  flower.in
+output: flower.out
