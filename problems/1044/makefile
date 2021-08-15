@@ -1,0 +1,36 @@
+CXX=g++
+CFLAGS=
+
+SRC=$(wildcard *.cpp)
+TARGET= gen_data std
+NAME=group
+
+all: $(TARGET)
+	@echo $(TARGET)
+	@rm -rf data
+	@mkdir -p data
+	./gen_data 5 3 2 10 > data/$(NAME)1.in
+	./gen_data 10 3 2 100 > data/$(NAME)2.in
+	./gen_data 500 3 2 100 > data/$(NAME)3.in
+	./gen_data 1000 100 2 100 > data/$(NAME)4.in
+	./gen_data 3000 200 2 100 > data/$(NAME)5.in
+	./gen_data 8000 100 2 100 > data/$(NAME)6.in
+	./gen_data 10000 100 2 100 > data/$(NAME)7.in
+	./gen_data 100000 90 2 100 > data/$(NAME)8.in
+	./gen_data 200000 888 2 100 > data/$(NAME)9.in
+	./gen_data 200000 1000 2 1000 > data/$(NAME)10.in
+	@for var in "./data/"$(NAME){1..10}".in"; do \
+        echo $$var; \
+        ./std < $$var > $${var/%in/out}; \
+		#input="$$var"; \
+        #echo $$input; \
+        #echo $${var/%in/out}; \
+    done
+	@echo done
+
+
+% : %.cpp
+	$(CXX) $(CFLAGS) -o $@ $<
+
+clean:
+	rm -rf $(TARGET)
