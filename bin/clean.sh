@@ -1,0 +1,2 @@
+rm coredump.*
+rm ./*.txt
