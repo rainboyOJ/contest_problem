@@ -1,0 +1,5 @@
+title: 双色Hanoi塔问题
+time: 1000
+memory: 128
+input:  hanoi.in
+output: hanoi.out

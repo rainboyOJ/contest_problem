@@ -1,0 +1,5 @@
+title: 书的复制
+time: 1000
+memory: 128
+input:  book.in
+output: book.out
