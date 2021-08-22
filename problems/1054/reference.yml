@@ -1,0 +1,5 @@
+title: 歌手
+time: 1000
+memory: 128
+input:  singer.in
+output: singer.out

@@ -1,0 +1,5 @@
+title: 比赛
+time: 1000
+memory: 128
+input:  game.in
+output: game.out
