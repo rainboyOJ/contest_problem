@@ -1,0 +1,5 @@
+title: 多米诺骨牌
+time: 1000
+memory: 128
+input:  dom.in
+output: dom.out
