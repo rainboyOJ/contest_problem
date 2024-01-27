@@ -11,14 +11,17 @@ function load_yaml(path){
 }
 
 
-let plist = load_yaml("./plist.yml")
+const project_path = Path.join(__dirname,"..")
+const plist = load_yaml("./config.yaml")
+var problems_dir = Path.join( project_path,plist.problems_dir)
+if( Path.isAbsolute(plist.problems_dir) ) problems_dir = plist.problems_dir
 
 //const __dirname = Path.resolve(Path.dirname(decodeURI(new URL(import.meta.url).pathname)));
 
 function load_problem(pid){
-  let base_path = Path.join(__dirname,"../problems")
-  let content = readFileSync(Path.join(base_path,pid+'','content.md'),{encoding:'utf8'})
-  let refrence = load_yaml(Path.join(base_path,pid+'','reference.yml'))
+  let base_path = Path.join(problems_dir,pid.dir)
+  let content = readFileSync(Path.join(base_path,'content.md'),{encoding:'utf8'})
+  let refrence = JSON.parse(readFileSync(Path.join(base_path,'config.json'),{encoding:'utf8'}))
   return {
     content,
     refrence
@@ -31,14 +34,15 @@ var table_info = [
 ]
 for( let pid of plist.problems){ 
   let info = load_problem(pid)
+  info.refrence.title = pid.name
   problems.push(info) 
   table_info.push([
-    info.refrence.title,
+    pid.name || info.refrence.title,
     info.refrence.time,
     info.refrence.memory,
-    info.refrence.codename ||( info.refrence.input ?  info.refrence.input.split(".")[0] : false) || 'unkown', 
-    info.refrence.input,
-    info.refrence.output
+    pid.name || info.refrence.codename ||( info.refrence.input ?  info.refrence.input.split(".")[0] : false) || 'unkown', 
+    pid.name + '.in' ||  info.refrence.input,
+    pid.name + '.out' || info.refrence.output
   ])
 }
 
@@ -81,7 +85,7 @@ if( existsSync('info.md') ){
 
 for( const [i, info] of problems.entries() ){
   Write('\n\n\n\n')
-  Write(`## ${i+1} ${info.refrence.title} \n\n`)
+  Write(`## ${String.fromCharCode(65+i)} ${info.refrence.title} \n\n`)
   Write(info.content)
   Write('\n\n\n\n')
 }

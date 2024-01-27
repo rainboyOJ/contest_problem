@@ -1,0 +1,5 @@
+title: 采集能量
+time: 1000
+memory: 128
+input:  .in
+output: .out

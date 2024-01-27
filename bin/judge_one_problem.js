@@ -105,7 +105,7 @@ function run(exe_path, user_out, in_file) {
 function compare(user_out, out_file, CWD) {
     try {
         // console.log(`diff --strip-trailing-cr ${user_out} ${out_file}`)
-        execSync(`/usr/bin/diff -b --strip-trailing-cr "${user_out}" "${out_file}"`, {
+        execSync(`/usr/bin/diff -B -b --strip-trailing-cr "${user_out}" "${out_file}"`, {
             cwd: '/tmp',
             encoding: 'utf-8',
             stdio: 'ignore'
@@ -129,10 +129,10 @@ function judge_one_problem(code_path, problem_path, CWD) {
     let results = []
     const exe_path = compile(code_path, CWD)
     if (!exe_path) {
-        console.log('编译失败')
+        // console.log('编译失败')
         return ['CE']
     }
-    console.log(`编译 ${basename(code_path)} 成功`)
+    // console.log(`编译 ${basename(code_path)} 成功`)
     //比较每一个数据
     for (let [in_file, out_file] of pinfo.data.both_list) {
         let str = '';

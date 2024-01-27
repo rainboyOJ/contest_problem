@@ -104,13 +104,11 @@ $if(section-titles)$
   \end{beamercolorbox}
 }
 \setbeamertemplate{section page}{
-  \centering
   \begin{beamercolorbox}[sep=12pt,center]{part title}
     \usebeamerfont{section title}\insertsection\par
   \end{beamercolorbox}
 }
 \setbeamertemplate{subsection page}{
-  \centering
   \begin{beamercolorbox}[sep=8pt,center]{part title}
     \usebeamerfont{subsection title}\insertsubsection\par
   \end{beamercolorbox}
