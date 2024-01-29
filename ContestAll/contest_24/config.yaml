@@ -1,0 +1,28 @@
+# 比赛标题
+title: 第24次比赛
+desc: lego A/B 组比赛
+
+# 题目的基本目录
+problems_dir: /home/rainboy/mycode/RainboyOJ/problems
+
+# 题目相关信息
+problems:
+  - 
+    create_dir: number # 代码应该应该在目录
+    name: number # 代码的名字
+    dir: roj/1067 # 题目相对 problems_dir所在的位置
+  - 
+    create_dir: rect
+    name: rect
+    dir: roj/1097
+  - 
+    create_dir: tree
+    name: tree
+    dir: roj/3537
+  - 
+    create_dir: apple
+    name: apple
+    dir: other_oj/luogu/9748
+
+# 用户代码所在的数据文件
+user_codes: code/contest_24
