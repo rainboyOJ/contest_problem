@@ -8,8 +8,22 @@ const getDataList = require("./getDataList")
 
 function get_problem_info(problem_path) {
     let info_path = join(problem_path, 'config.json')
-    let info = JSON.parse(readFileSync(info_path, { encoding: 'utf8' }))
-    let data = getDataList(join(problem_path, 'data'))
+    let info = {}
+    if( existsSync( info_path ) )
+        info = JSON.parse(readFileSync(info_path, { encoding: 'utf8' }))
+    let data = []
+
+    if( existsSync(join(problem_path, 'data'))) {
+        problem_path = join(problem_path, 'data')
+    }
+
+    let {both_list}= getDataList(problem_path)
+
+    data = both_list.map( d => [
+        join(problem_path,d[0]),
+        join(problem_path,d[1])
+    ] )
+
     return {
         problem_path,
         ...info,
@@ -40,10 +54,10 @@ function judge_result_id_to_str() {
 const result_id_str = [
     'AC', // 0
     'TLE', // 1
-    'TLE', // 3
-    'MLT', // 4
-    'RE', // 5
-    'SE', // 6
+    'TLE', // 2
+    'MLT', // 3
+    'RE', // 4
+    'SE', // 5
     'SE', // 7
     'SE', // 8
     'SE', // 9
@@ -62,6 +76,7 @@ const result_id_str = [
 //编译
 function compile(cppfile, CWD) {
     let exeCWD = dirname(cppfile)
+    // console.log(exeCWD,cppfile)
     let out_name = join(CWD, basename(cppfile).split('.')[0])
     try {
         execSync(`g++ -o "${out_name}" ${cppfile}`, {
@@ -134,24 +149,23 @@ function judge_one_problem(code_path, problem_path, CWD) {
     }
     // console.log(`编译 ${basename(code_path)} 成功`)
     //比较每一个数据
-    for (let [in_file, out_file] of pinfo.data.both_list) {
+    for (let [in_file, out_file] of pinfo.data) {
         let str = '';
-        let ab_in_file = join(problem_path, 'data', in_file)
-        let ab_out_file = join(problem_path, 'data', out_file)
         let user_out = 'user.out'
         // console.log(in_file, out_file)
-        let out = run(exe_path, user_out, ab_in_file)
+        let out = run(exe_path, user_out, in_file)
         let out_json = JSON.parse(out)
         // console.log(out_json)
         if (out_json.result != 0) { // 执行失败
             if (out_json.result >= 0 && out_json.result < result_id_str.length)
+            {
                 str = result_id_str[out_json.result]
+                // console.log('str',str)
+            }
             else
                 str = 'UE' //unknown error
-            break;
         }
-
-        if (!compare(user_out, ab_out_file, CWD)) {
+        else if (!compare(user_out, out_file, CWD)) {
             str = 'WA'
         }
         else str = 'AC'

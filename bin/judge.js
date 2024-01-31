@@ -131,12 +131,12 @@ for (let user of USER_INFO.users) {
 
     console.log(userName) 
 
-    //创建用户的信息
+    //创建用户的信
     Results.add_user(userName)
 
     //枚举 题目
     for (let P of CONTEST_INFO.problems) {
-        let code_name = join(P.create_dir, P.name + '.cpp')//TODO 可能有其它的后缀
+        let code_name = join(P.creae_dir, P.name + '.cpp')//TODO 可能有其它的后缀
         let user_code = join(user_cwd, code_name)   //用户对应题目的代码
         if (!existsSync(user_code)) {
             console.log(P.name, '不存在，得分 0!')
